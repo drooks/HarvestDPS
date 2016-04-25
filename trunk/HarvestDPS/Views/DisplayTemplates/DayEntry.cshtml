@@ -1,0 +1,132 @@
+﻿@model Harvest.Net.Models.DayEntry
+
+<div>
+    <h4>asdf</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatedAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdatedAt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedAt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpentAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpentAt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Hours)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Hours)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjectId)
+        </dt>
+
+        <dd hidden>
+            @Html.DisplayFor(model => model.ProjectId)
+        </dd>
+
+        <dt hidden>
+            @Html.DisplayNameFor(model => model.TaskId)
+        </dt>
+
+        <dd hidden>
+            @Html.DisplayFor(model => model.TaskId)
+        </dd>
+
+        <dt hidden>
+            @Html.DisplayNameFor(model => model.AdjustmentRecord)
+        </dt>
+
+        <dd hidden>
+            @Html.DisplayFor(model => model.AdjustmentRecord)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsBilled)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsBilled)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TimerStartedAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TimerStartedAt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartedAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartedAt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndedAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndedAt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Task)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Task)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Project)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Project)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

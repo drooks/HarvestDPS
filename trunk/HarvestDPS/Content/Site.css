@@ -1,0 +1,28 @@
+﻿label{
+    margin:unset;
+}
+
+.day-view-wrapper {
+    margin-right: 0;
+}
+
+.main-navigation.nav-blue {
+    background-color: orange;
+}
+
+.modal-header{
+    padding:0
+}
+.wrapper{
+    max-width:968px;
+}
+.nav > li > a {
+    color: #fff;
+}
+
+.nav > li > a:hover, 
+.nav > li > a:focus {background-color:rgba(255,255,255,0.2)}
+
+#edit-entry-form select, #new-entry-form select{
+    max-width :100%;
+} 

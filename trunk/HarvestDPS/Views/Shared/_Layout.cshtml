@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="danny is awesome, unless its broken then its steve's fault" />
+
+    <title>@ViewBag.Title - HarvestDPS</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body class="weekly-controller index-action">
+    <div class="sticky-footer-wrap">
+        <header id="global-header">
+            <nav class="nav-blue main-navigation js-nav">
+                <div class="wrapper clearfix">
+                    <div class="pull-left">
+                        <a class="" title="Home" href="https://rhythminteractive.harvestapp.com/overview">
+                            <i data-icon="home"></i>
+                        </a>
+                    </div>
+                    <div class="pull-right">
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                </div>
+            </nav>
+            <div id="status_message" class="do-not-print">
+                <span class="flash-message">
+                    <i data-icon=""></i>
+                </span>
+            </div>
+        </header>
+        <main>
+            <div class="wrapper">
+                @RenderBody()
+            </div>
+        </main>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/sitejs")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

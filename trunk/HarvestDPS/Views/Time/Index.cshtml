@@ -1,0 +1,193 @@
+﻿@{
+    ViewBag.Title = "Timesheet";
+}
+
+<div class="wrapper">
+
+    <div class="js-root-view day-view-wrapper js-with-models js-harvest-current-view" data-view-id="view6">
+        <div class="flash-wrap"></div>
+        <header class="timesheet-header clearfix">
+            <div class="pull-left">
+                <h1 class="test-day-20160321 test-user-1244191">
+                    Monday
+                    <span>21 Mar</span>
+                </h1>
+                <h2>Timesheet for Danny Rooks</h2>
+            </div>
+            <div class="pull-right do-not-print">
+                <span class="form-loading loading-week">
+                    &nbsp;
+                </span>
+                <div class="button-toggle">
+                    <button class="button button-icon-only button-toggle-arrow js-jump-one-day-back" tabindex="1" title="Previous Day" type="button">
+                        <i data-icon="arrow-left"></i>
+                    </button>
+                    <button class="button button-selected" tabindex="-1" title="Jump to Today" type="button">Today</button>
+                    <button class="button button-icon-only button-toggle-arrow js-jump-one-day-forward" tabindex="1" title="Next Day" type="button">
+                        <i data-icon="arrow-right"></i>
+                    </button>
+                </div>
+                &nbsp;
+                <button class="button button-icon-only js-calendar" tabindex="1" title="Change Date" type="button">
+                    <i data-icon="calendar"></i>
+                </button>
+                <div class="popover js-day-view-calendar-wrap"><div class="kalendae"><div class="k-calendar" data-cal-index="0"><div class="k-title k-disable-year-nav"><a class="k-btn-previous-year"></a><a class="k-btn-previous-month"></a><a class="k-btn-next-year"></a><a class="k-btn-next-month"></a><span class="k-caption">March 2016</span></div><div class="k-header"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div><div class="k-days"><span class="k-out-of-month k-active" data-date="2016-02-29">29</span><span class="k-in-month k-active" data-date="2016-03-01">1</span><span class="k-in-month k-active" data-date="2016-03-02">2</span><span class="k-in-month k-active" data-date="2016-03-03">3</span><span class="k-in-month k-active" data-date="2016-03-04">4</span><span class="k-in-month k-active" data-date="2016-03-05">5</span><span class="k-in-month k-active" data-date="2016-03-06">6</span><span class="k-in-month k-active" data-date="2016-03-07">7</span><span class="k-in-month k-active" data-date="2016-03-08">8</span><span class="k-in-month k-active" data-date="2016-03-09">9</span><span class="k-in-month k-active" data-date="2016-03-10">10</span><span class="k-in-month k-active" data-date="2016-03-11">11</span><span class="k-in-month k-active" data-date="2016-03-12">12</span><span class="k-in-month k-active" data-date="2016-03-13">13</span><span class="k-in-month k-active" data-date="2016-03-14">14</span><span class="k-in-month k-active" data-date="2016-03-15">15</span><span class="k-in-month k-active" data-date="2016-03-16">16</span><span class="k-in-month k-active" data-date="2016-03-17">17</span><span class="k-in-month k-active" data-date="2016-03-18">18</span><span class="k-in-month k-active" data-date="2016-03-19">19</span><span class="k-in-month k-active" data-date="2016-03-20">20</span><span class="k-selected k-in-month k-active k-today" data-date="2016-03-21">21</span><span class="k-in-month k-active" data-date="2016-03-22">22</span><span class="k-in-month k-active" data-date="2016-03-23">23</span><span class="k-in-month k-active" data-date="2016-03-24">24</span><span class="k-in-month k-active" data-date="2016-03-25">25</span><span class="k-in-month k-active" data-date="2016-03-26">26</span><span class="k-in-month k-active" data-date="2016-03-27">27</span><span class="k-in-month k-active" data-date="2016-03-28">28</span><span class="k-in-month k-active" data-date="2016-03-29">29</span><span class="k-in-month k-active" data-date="2016-03-30">30</span><span class="k-in-month k-active" data-date="2016-03-31">31</span><span class="k-out-of-month k-active" data-date="2016-04-01">1</span><span class="k-out-of-month k-active" data-date="2016-04-02">2</span><span class="k-out-of-month k-active" data-date="2016-04-03">3</span><span class="k-out-of-month k-active" data-date="2016-04-04">4</span><span class="k-out-of-month k-active" data-date="2016-04-05">5</span><span class="k-out-of-month k-active" data-date="2016-04-06">6</span><span class="k-out-of-month k-active" data-date="2016-04-07">7</span><span class="k-out-of-month k-active" data-date="2016-04-08">8</span><span class="k-out-of-month k-active" data-date="2016-04-09">9</span><span class="k-out-of-month k-active" data-date="2016-04-10">10</span></div></div></div></div>
+                &nbsp;
+                <div class="button-toggle">
+                    <button class="button button-selected" tabindex="-1" title="Day View" type="button">Day</button>
+                    <a class="button js-nav-week test-nav-week" href="/time/week/2016/03/21/1244191" tabindex="1" title="Week View">Week</a>
+                </div>
+            </div>
+        </header>
+        <section>
+            <div class="day-view-table test-entries-of-user-1244191">
+                <button class="button button-primary button-new button-icon-only do-not-print button-new-time-entry js-new-time-entry" tabindex="1" title="New Time Entry" type="button">
+                    <span class="text">New Entry</span>
+                </button>
+                <ul class="day-view-week-nav do-not-print">
+                    <li>
+                        <a class="js-day button button-selected is-today test-Monday" href="/time/day/2016/03/21/1244191" tabindex="-1" title="Monday 7:00">
+                            M
+                            <span class="js-sum-for-day">7:00</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="js-day button test-not-today test-Tuesday" href="/time/day/2016/03/22/1244191" tabindex="1" title="Tuesday 0:00">
+                            T
+                            <span class="js-sum-for-day">0:00</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="js-day button test-not-today test-Wednesday" href="/time/day/2016/03/23/1244191" tabindex="1" title="Wednesday 0:00">
+                            W
+                            <span class="js-sum-for-day">0:00</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="js-day button test-not-today test-Thursday" href="/time/day/2016/03/24/1244191" tabindex="1" title="Thursday 0:00">
+                            Th
+                            <span class="js-sum-for-day">0:00</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="js-day button test-not-today test-Friday" href="/time/day/2016/03/25/1244191" tabindex="1" title="Friday 0:00">
+                            F
+                            <span class="js-sum-for-day">0:00</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="js-day button test-not-today test-Saturday" href="/time/day/2016/03/26/1244191" tabindex="1" title="Saturday 0:00">
+                            S
+                            <span class="js-sum-for-day">0:00</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="js-day button test-not-today test-Sunday" href="/time/day/2016/03/27/1244191" tabindex="1" title="Sunday 0:00">
+                            Su
+                            <span class="js-sum-for-day">0:00</span>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="js-day" id="day-view-week-nav-total">
+                            Total:
+                            <b class="day-view-week-nav-total">7:00</b>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="day-view-entry-list">
+                    <li class="day-view-entry test-entry-441869496">
+                        <table border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="entry-info">
+                                            <div class="project-client">
+                                                <span class="project">My new project</span>
+                                                <span class="client">
+                                                    (My new client)
+                                                </span>
+                                            </div>
+                                            <div class="task-notes">
+                                                <span class="task">Marketing</span>
+                                                <span class="ndash">–</span>
+                                                <span class="notes">
+                                                    <p>boom</p>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="entry-time">
+                                        1:00
+                                    </td>
+                                    <td class="entry-button do-not-print">
+                                        <button class="button button-large js-start-timer" tabindex="1" type="button">
+                                            <b class="running-icon">
+                                                <i></i>
+                                            </b>
+                                            Start
+                                        </button>
+                                    </td>
+                                    <td class="edit-button do-not-print">
+                                        <button class="button button-small button-icon-only js-edit-entry" tabindex="1" title="Edit Entry" type="button">
+                                            <i data-icon="edit"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </li>
+                    <li class="day-view-entry test-entry-441894723">
+                        <table border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="entry-info">
+                                            <div class="project-client">
+                                                <span class="project">My new project</span>
+                                                <span class="client">
+                                                    (My new client)
+                                                </span>
+                                            </div>
+                                            <div class="task-notes">
+                                                <span class="task">Project Management</span>
+                                                <span class="ndash">–</span>
+                                                <span class="notes">
+                                                    <p>test</p>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="entry-time">
+                                        6:00
+                                    </td>
+                                    <td class="entry-button do-not-print">
+                                        <button class="button button-large js-start-timer" tabindex="1" type="button">
+                                            <b class="running-icon">
+                                                <i></i>
+                                            </b>
+                                            Start
+                                        </button>
+                                    </td>
+                                    <td class="edit-button do-not-print">
+                                        <button class="button button-small button-icon-only js-edit-entry" tabindex="1" title="Edit Entry" type="button">
+                                            <i data-icon="edit"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </li>
+                </ul>
+                <div class="day-view-summary">
+                    <div class="day-view-total js-total-for-day">
+                        Total:
+                        <span>7:00</span>
+                    </div>
+                </div>
+            </div>
+            <div class="timesheet-bottom clearfix">
+                <div class="day-view-duplication"><span class="test-day-view-duplication"></span></div>
+            </div>
+        </section>
+    </div>
+</div>

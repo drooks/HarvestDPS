@@ -1,0 +1,50 @@
+﻿@using HarvestDPS.Extensions
+@model DateTime
+@{
+    //System.Diagnostics.Debugger.Launch();
+    ViewBag.Title = "Day";
+}
+
+<div class="js-root-view day-view-wrapper js-with-models js-harvest-current-view" data-view-id="view38">
+    <div class="flash-wrap"></div>
+    <header class="timesheet-header clearfix">
+        <div class="pull-left">
+            <h1>
+                @string.Format("{0:dddd}", Model)
+                <span>@string.Format("{0:dd} {0:MMM}", Model)</span>
+            </h1>
+        </div>
+        <div class="pull-right do-not-print">
+            <span class="form-loading loading-week">
+                &nbsp;
+            </span>
+            <div class="button-toggle">
+                <a href="@(HarvestHelper.UrlDateTime(Model.AddDays(-7)))">
+                    <div tabindex="1" title="Previous Week" type="button" class="button button-icon-only button-toggle-arrow js-jump-one-day-back">
+                        <i data-icon="arrow-left"></i>
+                    </div>
+                </a>
+                @if (Model.Date == DateTime.Now.Date)
+                {
+                <button class="button button-selected" tabindex="1" title="Jump to Today" type="button">Today</button>
+                }
+                else
+                {
+                <a href="@(HarvestHelper.UrlDateTime(DateTime.Now))">
+                    <div class="button jump-to-today" tabindex="1" title="Jump to Today" type="button">Today</div>
+                </a>
+                }
+
+                <a href="@(HarvestHelper.UrlDateTime(Model.AddDays(7)))">
+                    <div class="button button-icon-only button-toggle-arrow js-jump-one-day-forward" tabindex="1" title="Next Week" type="button">
+                        <i data-icon="arrow-right"></i>
+                    </div>
+
+                </a>
+            </div>
+            &nbsp;
+        </div>
+    </header>
+    <div class="PartialContent" data-url="@Url.Action("GetAddEntry", new {Date=Model })"></div>
+    <div class="PartialContent" data-url="@Url.Action("GetWeek", new {Date=Model })"></div>
+</div>

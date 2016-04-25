@@ -1,0 +1,157 @@
+﻿@using HarvestDPS.Extensions
+@using HarvestDPS.Models
+@using Harvest.Net.Models
+@using System.Linq
+@model GetDayEntriesModel2
+@{
+//System.Diagnostics.Debugger.Launch();
+}
+<header class="timesheet-header clearfix">
+    <hr />
+
+    <div class="pull-left">
+        <h1>
+            @string.Format("{0:dddd}", Model.SelectedDateTime)
+            <span>@string.Format("{0:dd} {0:MMM}", Model.SelectedDateTime)</span>
+        </h1>
+    </div>
+    <div class="pull-right do-not-print">
+        <span class="form-loading loading-week">
+            &nbsp;
+        </span>
+        <div class="button-toggle">
+            <button tabindex="1" title="Previous Week" type="button" class="button button-icon-only button-toggle-arrow js-jump-one-week-back" data-target="project_content_@Model.ProjectId" data-url="@Url.Action("GetWeekDpsDayEntries", new { projectId=Model.ProjectId, date = Model.SelectedDateTime.AddDays(-7) })">
+                <i data-icon="arrow-left"></i>
+            </button>
+
+            @if (Model.SelectedDateTime.Date == DateTime.Now.Date)
+            {
+                <button class="button button-selected" tabindex="1" title="Jump to Today" type="button">Today</button>
+            }
+            else
+            {
+                <div class="button jump-to-today" tabindex="1" title="Jump to Today" type="button" data-target="project_content_@Model.ProjectId" data-url="@Url.Action("GetWeekDpsDayEntries", new { projectId=Model.ProjectId, date = DateTime.Now.Date })">
+                    Today
+                </div>
+            }
+
+            <div class="button button-icon-only button-toggle-arrow js-jump-one-week-forward" tabindex="1" title="Next Week" type="button" data-target="project_content_@Model.ProjectId" data-url="@Url.Action("GetWeekDpsDayEntries", new { projectId=Model.ProjectId, date = Model.SelectedDateTime.AddDays(7) })">
+                <i data-icon="arrow-right"></i>
+            </div>
+        </div>
+        &nbsp;
+    </div>
+</header>
+<section>
+    <div class="day-view-table">
+        <ul class="day-view-week-nav do-not-print" style="white-space:nowrap">
+            @foreach (WeekDate date in Model.WeekDates)
+            {
+                <li>
+                    <a class="js-day button test-@date.DateTime.DayOfWeek @(date.Selected?"button-selected is-today":"test-not-today")" title="@date.DateTime.DayOfWeek @(date.TotalHours.ToString ("0.00"))" data-target="project_content_@Model.ProjectId" data-url="@Url.Action("GetWeekDpsDayEntries", new { projectId=Model.ProjectId, date = date.DateTime })">
+                        @date.DateTime.DayOfWeek
+                        <span class="js-sum-for-day">@(date.TotalHours.ToString("0.00"))</span>
+
+                    </a>
+                </li>
+            }
+            <li>
+                <div class="js-day" id="day-view-week-nav-total">
+                    Total:
+                    <b class="day-view-week-nav-total">@Model.WeekDates.Sum(x => x.TotalHours).ToString("0.00")</b>
+                </div>
+            </li>
+        </ul>
+        <ul class="day-view-entry-list">
+            @foreach (DpsDayEntry dpsDayEntry in Model.DpsDayEntries)
+            {
+                //Project project = Projects.Single(x => x.Id == dayEntry.ProjectId);
+
+                <li class="day-view-entry test-entry-@dpsDayEntry.Id">
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="entry-info">
+                                        <div class="project-client">
+                                            <span class="project">
+                                                @*[@Model.ProjectCode]*@
+                                                @dpsDayEntry.Task
+                                            </span>
+                                            <span class="client">
+                                                (@dpsDayEntry.Who)
+                                            </span>
+                                        </div>
+                                        <div class="task-notes">
+                                            <span class="task">
+                                                @dpsDayEntry.Task
+                                            </span>
+                                            <span class="ndash">–</span>
+                                            <span class="notes">
+                                                @Html.Raw(dpsDayEntry.Notes)
+                                                @*JSON: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(dpsDayEntry))*@
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span class="notes">
+                                                Today's tasks:
+                                                @Html.Raw(dpsDayEntry.WhatsNew)
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span class="notes">
+                                                Challenges:
+                                                @Html.Raw(dpsDayEntry.Blockers)
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span class="notes">
+                                                Tomorrow's tasks:
+                                                @Html.Raw(dpsDayEntry.WhatsNext)
+                                            </span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="entry-time">
+                                    @dpsDayEntry.Hours
+                                </td>
+                                <td class="edit-button do-not-print">
+                                    @*<button class="button button-small button-icon-only js-edit-entry" tabindex="1" title="Edit Entry" type="button" data-toggle="modal" data-target="#EditEntryModel" data-dayEntry='@Newtonsoft.Json.JsonConvert.SerializeObject(dayEntry)'>
+                                            <i data-icon="edit"></i>
+                                        </button>*@
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </li>
+            }
+        </ul>
+        <div class="day-view-summary">
+
+            @*Todo Display Empty or sum of hours*@
+            @if (Model.DpsDayEntries.Any())
+            {
+                <div class="day-view-total js-total-for-day">
+                    Total:
+                    <span>
+                        @Model.DpsDayEntries.Sum(x => x.Hours)
+                    </span>
+                </div>
+            }
+            else
+            {
+                <div class="empty-view is-capped is-spacious js-week-not-loaded">
+                    <div class="do-not-print">
+                        <p>
+                            "They've done studies, you know. 60% of the time, it works every time."
+                            <br /> - Brian Fantana
+                        </p>
+                    </div>
+                    <div class="time-no-time-tracked">
+                        No time tracked for today!
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

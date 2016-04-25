@@ -1,0 +1,53 @@
+﻿@using System.Collections.Generic
+@using HarvestDPS.Models
+@using Harvest.Net.Models
+@model ReportingIndexModel
+@{
+    ViewBag.Title = "Harvest/DPS Mashup";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<div style="display:none">
+    @Newtonsoft.Json.JsonConvert.SerializeObject(Model)
+</div>
+
+@foreach (Client client in Model.Clients)
+{
+    <div id="client_title_@client.Id">
+        <h1>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#client_content_@client.Id" aria-expanded="false" aria-controls="client_content_@client.Id">
+                <span class="glyphicon glyphicon-collapse-up" title></span>
+            </button>
+            @client.Name
+            <span class="badge">@Model.Projects.Count(x => x.ClientId == client.Id) Projects</span>
+        </h1>
+    </div>
+    <div class="in" id="client_content_@client.Id">
+        @foreach (Project project in Model.Projects.Where(x => x.ClientId == client.Id))
+        {
+            <div id="project_title_@project.Id">
+                <h2>
+                    <button class="project-expand btn btn-default collapsed" type="button" data-toggle="collapse" data-target="#project_content_@project.Id" aria-expanded="false" aria-controls="project_content_@project.Id">
+                        <span class="glyphicon glyphicon-collapse-down" title></span>
+                    </button>
+                    [@project.Code] @project.Name
+                </h2>
+            </div>
+            <div class="collapse loadTimeEntries" id="project_content_@project.Id" data-projectId="@project.Id" data-url="@Url.Action("GetWeekDpsDayEntries", new { projectId=project.Id})">
+            </div>
+        }
+
+    </div>
+}
+@if (!Model.Clients.Any())
+{
+    <div class="empty-view is-capped is-spacious js-week-not-loaded">
+        <div class="do-not-print">
+            <p>
+                "They've done studies, you know. 60% of the time, it works every time."
+                <br /> - Brian Fantana
+            </p>
+        </div>
+    </div>
+}

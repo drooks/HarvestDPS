@@ -1,0 +1,177 @@
+﻿@model Harvest.Net.Models.Daily
+
+@{ 
+    var Projects = Model.Projects.ToList();
+    var Clients = Projects.Select(x => x.Client).Distinct();
+    DateTime selectedDate = Model.ForDay;
+}
+<button class="button button-primary button-new button-icon-only do-not-print button-new-time-entry js-new-time-entry" tabindex="1" title="New Time Entry" type="button" data-toggle="modal" data-target="#NewEntryModel">
+    <span class="text">New Entry</span>
+</button>
+
+<div id="NewEntryModel" class="modal" role="dialog" aria-labelledby="NewEntryLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="NewEntryLabel">
+                    New Time Entry
+                    <span class="js-spent-at-display spent-at-display">@string.Format("{0:dddd} {0:dd} {0:MMM}", selectedDate)</span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form id="new-entry-form" action="~/Api/TimeEntry" method="post">
+                    <input type="hidden" name="spentAt" value="@selectedDate" />
+                    <div class="form-field js-project-container">
+                        <label for="projects">Project / Task</label>
+
+                        <select class="js-project" name="projectId">
+                            @foreach (var client in Clients)
+                            {
+                                <optgroup label="@client">
+                                    @foreach (var project in Projects.Where(x => x.Client == client))
+                                    {
+                                        <option value="@project.Id">[@project.Code] @project.Name</option>
+                                    }
+
+                                </optgroup>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-field js-task-container">
+                        <label for="tasks" style="display:none">Tasks</label>
+                        <select class="js-tasks" name="taskid">
+                            <optgroup label="Billable">
+                                @foreach (Harvest.Net.Models.Task task in Projects[0].Tasks.Where(x => x.Billable == true))
+                                {
+                                    <option value="@task.Id">@task.Name</option>
+                                }
+                            </optgroup>
+                            <optgroup label="Non-Billable">
+                                @foreach (Harvest.Net.Models.Task task in Projects[0].Tasks.Where(x => x.Billable != true))
+                                {
+                                    <option value="@task.Id">@task.Name</option>
+                                }
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <div class="nef-duration-notes">
+                            <label class="hide" for="entry-notes">Notes</label>
+                            <textarea class="entry-notes js-notes" name="notes" placeholder="Notes" style="overflow: hidden; word-wrap: break-word; resize: none; height: 56px;"></textarea>
+                            <span class="add-notes-helper-text">Shift+Return for line break</span>
+                        </div>
+                        <div class="nef-duration">
+                            <label class="hide" for="entry-duration">Hours</label>
+                            <input class="entry-duration js-duration" name="hours" placeholder="0.00" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="form-field">
+                        <label class="hide" for="entry-whatsNew">New</label>
+                        <textarea class="entry-notes js-notes" name="whatsNew" placeholder="Today's tasks" style="overflow: hidden; word-wrap: break-word; resize: none; height: 56px;"></textarea>
+                        <span class="add-notes-helper-text">Shift+Return for line break</span>
+                    </div>
+                    <div class="form-field">
+                        <label class="hide" for="entry-blockers">Blockers</label>
+                        <textarea class="entry-notes js-notes" name="blockers" placeholder="Challenges" style="overflow: hidden; word-wrap: break-word; resize: none; height: 56px;"></textarea>
+                        <span class="add-notes-helper-text">Shift+Return for line break</span>
+                    </div>
+                    <div class="form-field">
+                        <label class="hide" for="entry-whatsNext">Next</label>
+                        <textarea class="entry-notes js-notes" name="whatsNext" placeholder="Tomorrow's tasks" style="overflow: hidden; word-wrap: break-word; resize: none; height: 56px;"></textarea>
+                        <span class="add-notes-helper-text">Shift+Return for line break</span>
+                    </div>
+                    <div class="form-field-actions">
+                        <input class="button button-large button-primary js-save" type="button" value="Save Entry">
+                        <button class="button button-large button-cancel js-cancel" type="button" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="EditEntryModel" class="modal" role="dialog" aria-labelledby="EditEntryModel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="EditEntryModel">
+                    Edit Time Entry
+                    <span class="js-spent-at-display spent-at-display">@string.Format("{0:dddd} {0:dd} {0:MMM}", selectedDate)</span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form id="edit-entry-form" class="edit-form edit-entry-form">
+                    <input type="hidden" name="SpentAt" value="@selectedDate" />
+                    <div class="form-field js-project-container">
+                        <label for="projects">Project / Task</label>
+                        <select class="js-project" name="tProjectId">
+                            @foreach (var project in Projects)
+                            {
+                                <optgroup label="@project.Client">
+                                    <option value="@project.Id">[@project.Code] @project.Name</option>
+                                </optgroup>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-field js-task-container">
+                        <label for="tasks" style="display:none">Tasks</label>
+                        <select class="js-tasks" name="tTaskid">
+                            <optgroup label="Billable">
+                                @foreach (Harvest.Net.Models.Task task in Projects[0].Tasks.Where(x => x.Billable == true))
+                                {
+                                    <option value="@task.Id">@task.Name</option>
+                                }
+                            </optgroup>
+                            <optgroup label="Non-Billable">
+                                @foreach (Harvest.Net.Models.Task task in Projects[0].Tasks.Where(x => x.Billable != true))
+                                {
+                                    <option value="@task.Id">@task.Name</option>
+                                }
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <div class="nef-duration-notes">
+                            <label class="hide" for="entry-notes">Notes</label>
+                            <textarea class="entry-notes js-notes" name="tNotes" placeholder="Notes" style="overflow: hidden; word-wrap: break-word; resize: none; height: 56px;"></textarea>
+                            <span class="add-notes-helper-text">Shift+Return for line break</span>
+                        </div>
+                        <div class="nef-duration">
+                            <label class="hide" for="entry-duration">Hours</label>
+                            <input class="entry-duration js-duration" name="tHours" placeholder="0.00" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="form-field">
+                        <label class="hide" for="entry-whatsNew">New</label>
+                        <textarea class="entry-notes js-notes" name="tWhatsNew" placeholder="Today's tasks" style="overflow: hidden; word-wrap: break-word; resize: none; height: 56px;"></textarea>
+                        <span class="add-notes-helper-text">Shift+Return for line break</span>
+                    </div>
+                    <div class="form-field">
+                        <label class="hide" for="entry-blockers">Blockers</label>
+                        <textarea class="entry-notes js-notes" name="tBlockers" placeholder="Challenges" style="overflow: hidden; word-wrap: break-word; resize: none; height: 56px;"></textarea>
+                        <span class="add-notes-helper-text">Shift+Return for line break</span>
+                    </div>
+                    <div class="form-field">
+                        <label class="hide" for="entry-whatsNext">Next</label>
+                        <textarea class="entry-notes js-notes" name="tWhatsNext" placeholder="Tomorrow's tasks" style="overflow: hidden; word-wrap: break-word; resize: none; height: 56px;"></textarea>
+                        <span class="add-notes-helper-text">Shift+Return for line break</span>
+                    </div>
+                    <div class="form-field-actions">
+                        <input class="button button-large button-primary js-save" type="button" value="Save Entry">
+                        <button class="button button-large button-cancel js-cancel" type="button" data-dismiss="modal">Cancel</button>
+                    </div>
+                    <div class="form-field-actions entry-delete-confirmation js-entry-delete-confirmation" style="display: none;">
+                        Remove entry from this timesheet?
+                        &nbsp;
+                        <button class="button button-small button-important js-confirm-delete-entry" type="button">Delete</button>
+                        <button class="button button-small button-cancel js-cancel-delete-entry" type="button">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*<hr />
+    <div class="PartialContent" data-url="@Url.Action("Week", new {Date=Model.SelectedDateTime })"></div>*@

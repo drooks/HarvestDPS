@@ -1,0 +1,114 @@
+﻿@using HarvestDPS.Extensions
+@using HarvestDPS.Models
+@using Harvest.Net.Models
+@using System.Linq
+@model DayModel
+@{
+    /// Areas of improvements -
+    /// 1) break up data requests from day into an API/API calling layer
+    /// 1) and/or use partials to separate data calls and content
+
+    //System.Diagnostics.Debugger.Launch();
+
+    ViewBag.Title = "Day";
+
+    var Projects = Model.Daily.Projects.ToList();
+    var Clients = Projects.Select(x => x.Client).Distinct();
+    DateTime selectedDate = Model.Daily.ForDay;
+}
+
+
+<section>
+    <div class="day-view-table test-entries-of-user-1230286">
+        <ul class="day-view-week-nav do-not-print" style="white-space:nowrap">
+            @foreach (WeekDate date in Model.WeekDates)
+            {
+                <li>
+                    <a class="js-day button test-@date.DateTime.DayOfWeek @(date.Selected?"button-selected is-today":"test-not-today")" href="@(HarvestHelper.UrlDateTime(date.DateTime))" tabindex="1" title="@date.DateTime.DayOfWeek @(date.TotalHours.ToString ("0.00"))">
+                        @date.DateTime.DayOfWeek
+                        <span class="js-sum-for-day">@(date.TotalHours.ToString("0.00"))</span>
+
+                    </a>
+                </li>
+            }
+            <li>
+                <div class="js-day" id="day-view-week-nav-total">
+                    Total:
+                    <b class="day-view-week-nav-total">@Model.WeekDates.Sum(x => x.TotalHours).ToString("0.00")</b>
+                </div>
+            </li>
+        </ul>
+        <ul class="day-view-entry-list">
+            @foreach (DayEntry dayEntry in Model.Daily.DayEntries)
+            {
+                Project project = Projects.Single(x => x.Id == dayEntry.ProjectId);
+
+                <li class="day-view-entry test-entry-@dayEntry.Id">
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="entry-info">
+                                        <div class="project-client">
+                                            <span class="project">
+                                                [@project.Code]
+                                                @project.Name
+                                            </span>
+                                            <span class="client">
+                                                (@project.Client)
+                                            </span>
+                                        </div>
+                                        <div class="task-notes">
+                                            <span class="task">
+                                                @dayEntry.Task
+                                            </span>
+                                            <span class="ndash">–</span>
+                                            <span class="notes">
+                                                @Html.Raw(dayEntry.Notes)
+                                            </span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="entry-time">
+                                    @dayEntry.Hours
+                                </td>
+                                <td class="edit-button do-not-print">
+                                    <button class="button button-small button-icon-only js-edit-entry" tabindex="1" title="Edit Entry" type="button" data-toggle="modal" data-target="#EditEntryModel" data-dayEntry='@Newtonsoft.Json.JsonConvert.SerializeObject(dayEntry)'>
+                                        <i data-icon="edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </li>
+            }
+        </ul>
+        <div class="day-view-summary">
+
+            @*Todo Display Empty or sum of hours*@
+            @if (Model.Daily.DayEntries.Any())
+            {
+                <div class="day-view-total js-total-for-day">
+                    Total:
+                    <span>
+                        @Model.Daily.DayEntries.Sum(x => x.Hours)
+                    </span>
+                </div>
+            }
+            else
+            {
+                <div class="empty-view is-capped is-spacious js-week-not-loaded">
+                    <div class="do-not-print">
+                        <p>
+                            "They've done studies, you know. 60% of the time, it works every time."
+                            <br /> - Brian Fantana
+                        </p>
+                    </div>
+                    <div class="time-no-time-tracked">
+                        No time tracked for today!
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
