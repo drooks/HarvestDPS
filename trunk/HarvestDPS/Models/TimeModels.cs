@@ -5,6 +5,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HarvestDPS.Models
 {
+    public class DayModel2
+    {
+        public long UserId { get; set; }
+        public DateTime SelectedDay { get; set; }
+        public List<WeekDate> WeekDates { get; set; }
+    }
+
+
     public class DayModel
     {
         public List<WeekDate> WeekDates { get; set; }
@@ -13,7 +21,6 @@ namespace HarvestDPS.Models
 
     public class WeekDate
     {
-        public bool Selected { get; set; } // there can only be one
         public DateTime DateTime { get; set; }
 
         public decimal TotalHours { get; set; }

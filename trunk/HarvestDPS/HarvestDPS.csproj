@@ -130,6 +130,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ReportingController.cs" />
+    <Compile Include="Controllers\Time2Controller.cs" />
     <Compile Include="Controllers\TimeController.cs" />
     <Compile Include="Extensions\AuthHelper.cs" />
     <Compile Include="Extensions\ControllerHelper.cs" />
@@ -151,6 +152,13 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\eula.1042.css" />
+    <Content Include="Content\Images\icon-add-white.svg" />
+    <Content Include="Content\Images\icon-arrow-left.svg" />
+    <Content Include="Content\Images\icon-arrow-right.svg" />
+    <Content Include="Content\Images\icon-calendar.svg" />
+    <Content Include="Content\Images\icon-edit.svg" />
+    <Content Include="Content\Images\icon-home.svg" />
+    <Content Include="Content\Images\loading.gif" />
     <Content Include="Content\reset.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -169,6 +177,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\site.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -192,6 +201,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\View.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Time2\Day.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

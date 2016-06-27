@@ -19,6 +19,12 @@ namespace HarvestDPS
                 defaults: new { controller = "Time", action = "Day" });
 
             routes.MapRoute(
+                name: "TimeDay2",
+                url: "time2/{action}/{year}/{month}/{day}",
+                defaults: new { controller = "Time2", action = "Day" });
+
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Time", action = "Index", id = UrlParameter.Optional }

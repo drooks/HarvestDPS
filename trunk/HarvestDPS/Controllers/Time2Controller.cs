@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace HarvestDPS.Controllers
 {
     [Authorize]
-    public class TimeController : SiteController
+    public class Time2Controller : SiteController
     {
         // GET: Time -- Displays time entry form
         public ActionResult Index()
@@ -21,7 +21,16 @@ namespace HarvestDPS.Controllers
         //url: "time/day/{year}/{month}/{day}",
         public ActionResult Day(int year, int month, int day)
         {
+            var user = Client.WhoAmI().User;
+            
             var date = new DateTime(year, month, day);
+
+            var dayModel2 = new DayModel2 {
+                UserId = user.Id,
+                SelectedDay = date,
+                WeekDates = GetWeekDates(date)};
+
+
 
             //var user = Client.WhoAmI().User;
 
@@ -30,7 +39,7 @@ namespace HarvestDPS.Controllers
             //    Daily = Client.Daily((short)date.DayOfYear, (short)date.Year, user.Id)
             //};
 
-            return View(date);
+            return View(dayModel2);
         }
 
         public ActionResult GetAddEntry(DateTime date)
@@ -42,7 +51,14 @@ namespace HarvestDPS.Controllers
             return PartialView("_AddEntry", daily);
         }
 
-        public ActionResult GetWeek(DateTime date, long? projectId =null)
+        public ActionResult GetDaily(DateTime date, long userId)
+        {
+            var daily = Client.Daily((short)date.DayOfYear, (short)date.Year, userId);
+
+            return Content(Newtonsoft.Json.JsonConvert.SerializeObject(daily));
+        }
+
+        public ActionResult GetWeek(DateTime date)
         {
             var user = Client.WhoAmI().User;
 
@@ -60,19 +76,16 @@ namespace HarvestDPS.Controllers
             var daysFromMonday = ((int)target.DayOfWeek + 6) % 7;
             var monday = target.AddDays(-daysFromMonday);
 
-            var user = Client.WhoAmI().User;
-            List<DayEntry> dayEntries = (List<DayEntry>)Client.ListUserEntries(user.Id, monday, monday.AddDays(7));
-
             var currentDay = monday;
             for (int i = 0; i < 7; i++)
             {
                 result.Add(new WeekDate
                 {
                     DateTime = currentDay,
-                    TotalHours = dayEntries.Where(x => x.SpentAt.Date == currentDay).Sum(x => x.Hours)
                 });
                 currentDay = currentDay.AddDays(1);
             }
+
             return result;
         }
     }

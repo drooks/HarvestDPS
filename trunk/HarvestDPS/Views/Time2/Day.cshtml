@@ -1,0 +1,316 @@
+﻿@using HarvestDPS.Extensions
+@using HarvestDPS.Models
+@using Harvest.Net.Models
+@model DayModel2
+@{
+    //System.Diagnostics.Debugger.Launch();
+    ViewBag.Title = "Day";
+}
+
+<div class="js-root-view day-view-wrapper js-with-models js-harvest-current-view" data-view-id="view38">
+    <div class="flash-wrap"></div>
+    <header class="timesheet-header clearfix">
+        <div class="pull-left">
+            <h1>
+                @string.Format("{0:dddd}", Model.SelectedDay)
+                <span>@string.Format("{0:dd} {0:MMM}", Model.SelectedDay)</span>
+            </h1>
+        </div>
+        <div class="pull-right do-not-print">
+            <span class="form-loading loading-week">
+                &nbsp;
+            </span>
+            <div class="button-toggle">
+                <a href="@(HarvestHelper.UrlDateTime(Model.SelectedDay.AddDays(-7)))">
+                    <div tabindex="1" title="Previous Week" type="button" class="button button-icon-only button-toggle-arrow js-jump-one-day-back">
+                        <i data-icon="arrow-left"></i>
+                    </div>
+                </a>
+
+                <button class="button button-selected" tabindex="1" title="Jump to Today" type="button">Today</button>
+                <a href="@(HarvestHelper.UrlDateTime(DateTime.Now))">
+                    <div class="button jump-to-today" tabindex="1" title="Jump to Today" type="button">Today</div>
+                </a>
+
+                <a href="@(HarvestHelper.UrlDateTime(Model.SelectedDay.AddDays(7)))">
+                    <div class="button button-icon-only button-toggle-arrow js-jump-one-day-forward" tabindex="1" title="Next Week" type="button">
+                        <i data-icon="arrow-right"></i>
+                    </div>
+
+                </a>
+            </div>
+            &nbsp;
+        </div>
+    </header>
+
+    <button class="button button-primary button-new button-icon-only do-not-print button-new-time-entry js-new-time-entry" tabindex="1" title="New Time Entry" type="button" data-toggle="modal" data-target="#NewEntryModel">
+        <span class="text">New Entry</span>
+    </button>
+
+    <div id="NewEntryModel" class="modal" role="dialog" aria-labelledby="NewEntryLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="NewEntryLabel">
+                        New Time Entry
+                        <span class="js-spent-at-display spent-at-display">@string.Format("{0:dddd} {0:dd} {0:MMM}", Model.SelectedDay)</span>
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="EditEntryModel" class="modal" role="dialog" aria-labelledby="EditEntryModel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="EditEntryModel">
+                        Edit Time Entry
+                        <span class="js-spent-at-display spent-at-display">@string.Format("{0:dddd} {0:dd} {0:MMM}", Model.SelectedDay)</span>
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section>
+        <div class="day-view-table">
+            <ul class="day-view-week-nav do-not-print" style="white-space:nowrap">
+                @foreach (WeekDate date in Model.WeekDates)
+            {
+                    <li>
+                        @*<a class="js-day button test-@date.DateTime.DayOfWeek @(date.Selected?"button-selected is-today":"test-not-today")"*@ 
+                        <a class="js-day button test-@date.DateTime.DayOfWeek" 
+                           data-url="@(HarvestHelper.UrlGetDaily(date.DateTime, Model.UserId))" tabindex="1" title="@date.DateTime.DayOfWeek @(date.TotalHours.ToString ("0.00"))">
+                            
+                            @date.DateTime.DayOfWeek
+                            <span class="js-sum-for-day">@(date.TotalHours.ToString("0.00"))</span>
+
+                        </a>
+                    </li>
+                }
+                <li>
+                    <div class="js-day" id="day-view-week-nav-total">
+                        Total:
+                        <b class="day-view-week-nav-total">@Model.WeekDates.Sum(x => x.TotalHours).ToString("0.00")</b>
+                    </div>
+                </li>
+            </ul>
+            <ul class="day-view-entry-list">
+
+                @*@foreach (DayEntry dayEntry in Model.Daily.DayEntries)
+    {
+        Project project = Projects.Single(x => x.Id == dayEntry.ProjectId);
+
+            <li class="day-view-entry test-entry-@dayEntry.Id">
+                <table border="0" cellpadding="0" cellspacing="0">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="entry-info">
+                                    <div class="project-client">
+                                        <span class="project">
+                                            [@project.Code]
+                                            @project.Name
+                                        </span>
+                                        <span class="client">
+                                            (@project.Client)
+                                        </span>
+                                    </div>
+                                    <div class="task-notes">
+                                        <span class="task">
+                                            @dayEntry.Task
+                                        </span>
+                                        <span class="ndash">–</span>
+                                        <span class="notes">
+                                            @Html.Raw(dayEntry.Notes)
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="entry-time">
+                                @dayEntry.Hours
+                            </td>
+                            <td class="edit-button do-not-print">
+                                <button class="button button-small button-icon-only js-edit-entry" tabindex="1" title="Edit Entry" type="button" data-toggle="modal" data-target="#EditEntryModel" data-dayEntry='@Newtonsoft.Json.JsonConvert.SerializeObject(dayEntry)'>
+                                    <i data-icon="edit"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </li>
+        }*@
+            </ul>
+            <div class="day-view-summary">
+                    <div class="day-view-total js-total-for-day">
+                        Total:
+                        <span class="total"></span>
+                    </div>
+                    <div class="empty-view is-capped is-spacious js-week-not-loaded" style="display:none">
+                        <div class="do-not-print">
+                            <p>
+                                "They've done studies, you know. 60% of the time, it works every time."
+                                <br /> - Brian Fantana
+                            </p>
+                        </div>
+                        <div class="time-no-time-tracked">
+                            No time tracked for today!
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div id="NewEntryModel" class="modal" role="dialog" aria-labelledby="NewEntryLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="NewEntryLabel">
+                    New Time Entry
+                    <span class="js-spent-at-display spent-at-display">@string.Format("{0:dddd} {0:dd} {0:MMM}", Model.SelectedDay)</span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form id="new-entry-form" action="~/Api/TimeEntry" method="post">
+                    <input type="hidden" name="spentAt" value="@Model.SelectedDay" />
+                    <div class="form-field js-project-container">
+                        <label for="projects">Project / Task</label>
+
+                        <select class="js-project" name="projectId">
+                            @*@foreach (var client in Clients)
+                                {
+                                    <optgroup label="@client">
+                                        @foreach (var project in Projects.Where(x => x.Client == client))
+                                        {
+                                            <option value="@project.Id">[@project.Code] @project.Name</option>
+                                        }
+
+                                    </optgroup>
+                                }*@
+                        </select>
+                    </div>
+                    <div class="form-field js-task-container">
+                        <label for="tasks" style="display:none">Tasks</label>
+                        <select class="js-tasks" name="taskid">
+                            @*<optgroup label="Billable">
+                                    @foreach (Harvest.Net.Models.Task task in Projects[0].Tasks.Where(x => x.Billable == true))
+                                    {
+                                        <option value="@task.Id">@task.Name</option>
+                                    }
+                                </optgroup>
+                                <optgroup label="Non-Billable">
+                                    @foreach (Harvest.Net.Models.Task task in Projects[0].Tasks.Where(x => x.Billable != true))
+                                    {
+                                        <option value="@task.Id">@task.Name</option>
+                                    }
+                                </optgroup>*@
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <div class="nef-duration-notes">
+                            <label class="hide" for="entry-notes">Notes</label>
+                            <textarea class="entry-notes js-notes" name="notes" placeholder="Notes" style="overflow: hidden; word-wrap: break-word; resize: none; height: 56px;"></textarea>
+                            <span class="add-notes-helper-text">Shift+Return for line break</span>
+                        </div>
+                        <div class="nef-duration">
+                            <label class="hide" for="entry-duration">Hours</label>
+                            <input class="entry-duration js-duration" name="hours" placeholder="0.00" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="form-field">
+                        <label class="hide" for="entry-whatsNew">New</label>
+                        <textarea class="entry-notes js-notes" name="whatsNew" placeholder="Today's tasks" style="overflow: hidden; word-wrap: break-word; resize: none; height: 56px;"></textarea>
+                        <span class="add-notes-helper-text">Shift+Return for line break</span>
+                    </div>
+                    <div class="form-field">
+                        <label class="hide" for="entry-blockers">Blockers</label>
+                        <textarea class="entry-notes js-notes" name="blockers" placeholder="Challenges" style="overflow: hidden; word-wrap: break-word; resize: none; height: 56px;"></textarea>
+                        <span class="add-notes-helper-text">Shift+Return for line break</span>
+                    </div>
+                    <div class="form-field">
+                        <label class="hide" for="entry-whatsNext">Next</label>
+                        <textarea class="entry-notes js-notes" name="whatsNext" placeholder="Tomorrow's tasks" style="overflow: hidden; word-wrap: break-word; resize: none; height: 56px;"></textarea>
+                        <span class="add-notes-helper-text">Shift+Return for line break</span>
+                    </div>
+                    <div class="form-field-actions">
+                        <input class="button button-large button-primary js-save" type="button" value="Save Entry">
+                        <button class="button button-large button-cancel js-cancel" type="button" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        (function ($) {
+            $(document).ready(function () {
+                $.get("@Html.Raw(HarvestHelper.UrlGetDaily(Model.SelectedDay, Model.UserId))", function (result) {
+                    var daily = JSON.parse(result);
+                    BindDaily(daily);
+                });
+
+                $(".js-day:not(.button-selected)").on("click", function () {
+                    var $self = $(this);
+                    $.get($self.data().url, function (result) {
+                        var daily = JSON.parse(result);
+                        BindDaily(daily);
+                    });
+                });
+
+                function roundHours(hours) {
+                    return parseFloat(Math.round(hours * 100) / 100).toFixed(2);
+                }
+
+                function BindDaily(daily) {
+                    if (!daily) return;
+
+                    console.log(daily);
+
+                    var projects = daily.Projects;
+
+                    $(".day-view-entry-list").empty();
+
+                    $(".empty-view").toggle(daily.DayEntries.length == 0);
+
+                    var totalDayHours = 0;
+                    $(daily.DayEntries).each(function (i, e) {
+                        $(".day-view-entry-list").append('<li class="day-view-entry test-entry-' + e.Id + '"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>' +
+                            '<div class="entry-info"><div class="project-client"><span class="project">[project.Code]' + e.Project + 'project.Name</span>' +
+                            '<span class="client">(project.Client)</span></div><div class="task-notes"><span class="task">' + e.Task + '</span><span class="ndash">–</span>' +
+                            '<span class="notes">' + e.Notes + '</span></div></div></td><td class="entry-time">' + roundHours(e.Hours) + '</td><td class="edit-button do-not-print">' +
+                            '<button class="button button-small button-icon-only js-edit-entry" tabindex="1" title="Edit Entry" type="button" data-toggle="modal" data-target="#EditEntryModel" data-dayEntry="Newtonsoft.Json.JsonConvert.SerializeObject(dayEntry)"><i data-icon="edit"></i></button></td></tr></tbody></table></li>');
+                        totalDayHours += e.Hours;
+                        console.log(e);
+                    });
+
+                    $("span.total").text(roundHours(totalDayHours));
+
+
+                    //var Projects = Model.Daily.Projects.ToList();
+                    //var Clients = Projects.Select(x => x.Client).Distinct();
+
+                    var clients = [];
+
+                    $(daily.Projects).each(function (i, e) {
+                        clients.push({id:e.Id});
+                        //console.log(e);
+                    });
+
+                    //var daily.Pr
+                    //https://rhythminteractive.harvestapp.com/time/api/running_timers.json?user_id=1230286
+
+                }
+
+                // knockout somehite
+
+            })
+        })(jQuery);
+
+
+    </script>
+}

@@ -24,11 +24,11 @@
             @foreach (WeekDate date in Model.WeekDates)
             {
                 <li>
-                    <a class="js-day button test-@date.DateTime.DayOfWeek @(date.Selected?"button-selected is-today":"test-not-today")" href="@(HarvestHelper.UrlDateTime(date.DateTime))" tabindex="1" title="@date.DateTime.DayOfWeek @(date.TotalHours.ToString ("0.00"))">
+                    @*<a class="js-day button test-@date.DateTime.DayOfWeek @(date.Selected?"button-selected is-today":"test-not-today")" href="@(HarvestHelper.UrlDateTime(date.DateTime))" tabindex="1" title="@date.DateTime.DayOfWeek @(date.TotalHours.ToString ("0.00"))">
                         @date.DateTime.DayOfWeek
                         <span class="js-sum-for-day">@(date.TotalHours.ToString("0.00"))</span>
 
-                    </a>
+                    </a>*@
                 </li>
             }
             <li>

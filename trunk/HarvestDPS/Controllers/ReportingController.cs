@@ -60,7 +60,6 @@ namespace HarvestDPS.Controllers
 
                 weekdates.Add(new WeekDate
                 {
-                    Selected = currentDay.Date == target.Date,
                     DateTime = currentDay,
                     TotalHours = dayEntries.Sum(x=>x.Hours), //todo get hours logged to this day
                 });

@@ -30,7 +30,12 @@ namespace HarvestDPS.Extensions
 
         public static string UrlDateTime(DateTime datetime)
         {
-            return string.Format("/time/day/{0:yyyy}/{0:MM}/{0:dd}", datetime);
+            return string.Format("/time2/day/{0:yyyy}/{0:MM}/{0:dd}", datetime);
+        }
+
+        public static string UrlGetDaily(DateTime datetime, long userId)
+        {
+            return string.Format("/time2/GetDaily?date={0:yyyy}/{0:MM}/{0:dd}&userid={1}", datetime, userId);
         }
     }
 }
